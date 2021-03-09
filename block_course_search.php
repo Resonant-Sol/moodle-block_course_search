@@ -79,10 +79,10 @@ class block_course_search extends block_base
         $text = "<div class=\"searchform\">";
         $text .= "<form style='display:inline;' name='course_search_form' id='block_course_search_form' action='$CFG->wwwroot/blocks/course_search/results.php' method='post'>";
         $text .= "<fieldset class=\"invisiblefieldset\">";
-        $text .= get_string('searchfor', 'block_course_search') . "<br>";
+        $text .= "<div>" . get_string('searchfor', 'block_course_search') . "</div>";
         $text .= "<input type='hidden' name='courseid' id='courseid' value='$course->id'/>";
         $text .= "<input type='text' name='q' id='q' value=''/>";
-        $text .= "<br><input type='submit' id='searchform_button' value='" . get_string('submit', 'block_course_search') . "'>";
+        $text .= "<input type='submit' id='searchform_button' value='" . get_string('submit', 'block_course_search') . "'>";
         $text .= "</fieldset>";
         $text .= "</form>";
         $text .= "</div>";
