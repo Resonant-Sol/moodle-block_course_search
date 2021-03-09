@@ -17,7 +17,6 @@
 
 $string['course_search:addinstance'] = 'Add a new course search block';
 $string['course_search:myaddinstance'] = 'Add a new course search block';
-$string['blocksettings'] = 'Course search block settings';
 $string['configmodulestosearch'] = 'Describe module to search separated by commas';
 $string['configresultwithsummary'] = 'Results display with summary';
 $string['modulestosearch'] = 'Modules to search';
