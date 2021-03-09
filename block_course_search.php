@@ -25,6 +25,10 @@ class block_course_search extends block_base
         $this->title = get_string('pluginname', 'block_course_search');
     }
 
+    function has_config() {
+        return true;
+    }
+
     /**
      * Applicable formats
      * @return array

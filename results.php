@@ -25,7 +25,7 @@ require_login($courseid, true); //Use course 1 because this has nothing to do wi
 
 global $CFG, $PAGE, $OUTPUT, $DB, $USER;
 
-$context = get_context_instance(CONTEXT_COURSE, $courseid);
+$context = context_course::instance($courseid);
 
 $PAGE->set_pagelayout('incourse');
 $PAGE->set_url('/blocks/course_search/results.php', array('id' => $courseid));
@@ -36,8 +36,17 @@ $PAGE->requires->css('/blocks/course_search/styles.css');
 
 echo $OUTPUT->header();
 
+// config
+$config = get_config('block_course_search');
+
 //get all mods regardless if it's in the course or not.
 $modules = $DB->get_records_sql('SELECT name FROM {modules}');
+
+// module to search
+if (!empty($config->modulestosearch)) {
+    $modulestosearch = explode(',', $config->modulestosearch);
+    $modules = $DB->get_records_list('modules', 'name', $modulestosearch, '', 'name');
+}
 
 echo "<div class=\"clearfix\">";
 echo "<div class=\"info\">";

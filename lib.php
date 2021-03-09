@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
  */
 function block_course_search_search_module($courseid, $module, $q)
 {
-    global $CFG, $DB, $OUTPUT;
+    global $CFG, $DB, $OUTPUT, $PAGE;
 
     $ret = '';
     $sqlWere = 'course=? AND (false';
@@ -77,7 +77,17 @@ function block_course_search_search_module($courseid, $module, $q)
             foreach ($results as $result)
             {
                 $this_course_mod = $DB->get_record('course_modules', array('course' => $courseid, 'module' => $modid->id, 'instance' => $result->id));
-                $ret .= "<li><a href='$CFG->wwwroot/mod/$module->name/view.php?id=$this_course_mod->id'><img src='" . $OUTPUT->pix_url('icon', $module->name) . "' alt='$module->name -'/>&nbsp;$result->name</a></li>";
+                $ret .= "<li><a href='$CFG->wwwroot/mod/$module->name/view.php?id=$this_course_mod->id'><img src='" . $OUTPUT->image_url ('icon', $module->name) . "' alt='$module->name -'/>&nbsp;$result->name</a></li>";
+
+                // summary
+                $config = get_config('block_course_search');
+                if ($config->resultwithsummary) {
+                    $course_renderer = $PAGE->get_renderer('course');
+                    $mod = \cm_info::create($this_course_mod);
+                    $ret .= "<li>";
+                    $ret .= $course_renderer->course_section_cm_text($mod);
+                    $ret .= "</li>";
+                }
             }
         }
     }
@@ -107,7 +117,7 @@ function block_course_search_search_section($courseid, $q)
 
     foreach ($results as $result)
     {
-        $link = "<li><a href='$CFG->wwwroot/course/view.php?id=$courseid#section-$result->section'><img src='" . $OUTPUT->pix_url('icon', 'label') . "' alt='section - '/>&nbsp;$result->name</a></li>";
+        $link = "<li><a href='$CFG->wwwroot/course/view.php?id=$courseid#section-$result->section'><img src='" . $OUTPUT->image_url ('icon', 'label') . "' alt='section - '/>&nbsp;$result->name</a></li>";
         $ret .= $link;
     }
     return $ret;
@@ -163,7 +173,7 @@ function block_course_search_search_module_label($courseid, $module, $q, $modinf
 
         if ($sectionfounded != null)
         {
-            $ret .= "<li><a href='$CFG->wwwroot/course/view.php?id=$courseid#section-$sectionfounded->section'><img src='" . $OUTPUT->pix_url('icon', 'label') . "' alt='label - '/>&nbsp;$result->name</a></li>";
+            $ret .= "<li><a href='$CFG->wwwroot/course/view.php?id=$courseid#section-$sectionfounded->section'><img src='" . $OUTPUT->image_url ('icon', 'label') . "' alt='label - '/>&nbsp;$result->name</a></li>";
         }
     }
     return $ret;
@@ -201,7 +211,7 @@ function block_course_search_search_module_tab($courseid, $module, $q, $modinfo)
     foreach ($results as $result)
     {
         $this_course_mod = $DB->get_record('course_modules', array('course' => $courseid, 'module' => $modid->id, 'instance' => $result->id));
-        $ret .= "<li><a href='$CFG->wwwroot/mod/tab/view.php?id=$this_course_mod->id'><img src='" . $OUTPUT->pix_url('icon', 'tab') . "' alt=''/>&nbsp;$result->name</a></li>";
+        $ret .= "<li><a href='$CFG->wwwroot/mod/tab/view.php?id=$this_course_mod->id'><img src='" . $OUTPUT->image_url ('icon', 'tab') . "' alt=''/>&nbsp;$result->name</a></li>";
         $c++;
     }
 
