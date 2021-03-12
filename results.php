@@ -79,7 +79,8 @@ foreach ($modules as $module)
 }
 
 //Sections must be searched apart*****************************
-$section_result = block_course_search_search_section($courseid, $q);
+// search only streaming
+$section_result = '';//block_course_search_search_section($courseid, $q);
 if ($section_result != '')
 {
     $printed = true;
