@@ -35,7 +35,9 @@ class block_course_search extends block_base
      */
     function applicable_formats()
     {
-        return array('all' => true);
+	    return array('course-view' => true,
+	                 'course-view-social' => false
+	    );
     }
 
     /**
